@@ -1,13 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
 
+let times = (n) => {
+	return (f) => {
+		Array(n).fill().map((_, i) => f(i));
+	};
+};
+
 const Rules = React.createClass({
 	render: function() {
 		const className = classNames({
 				'info': true,
 				'hidden': !this.props.state.rules
-			}),
-			infoText = !this.props.state.rules ? 'Show rules' : 'Hide rules';
+			});
+		const infoText = !this.props.state.rules ? 'Show rules' : 'Hide rules';
 
 		return (
 			<div className="rules">
@@ -38,12 +44,11 @@ const DecodeRow = React.createClass({
 	},
 
 	render: function() {
-		let pegs = [],
-			i,
-			idVal,
-			pegClass;
+		let pegs = [];
+		let idVal;
+		let pegClass;
 
-		for (i = 1; i <= this.props.state.pegsInRow; i++) {
+		let generatePeg = (i) => {
 			idVal = this.props.name + '-' + i;
 			//update current row
 			if (this.props.state.currentRow === this.props.rowId) {
@@ -54,6 +59,8 @@ const DecodeRow = React.createClass({
 
 			pegs.push(<Peg idVal={idVal} name={this.props.name} value={i} key={idVal} pegClass={pegClass} isCurrentRow={this.props.isCurrentRow} activatePeg={this.props.activatePeg}/>);
 		}
+
+		times(this.props.state.pegsInRow)(generatePeg);
 
 		return (
 			<div className='decode-row'>
@@ -78,14 +85,14 @@ const SubmitButton = React.createClass({
 
 const Row = React.createClass({
 	render: function() {
-		const isCurrentRow = this.props.state.currentRow === this.props.rowId,
-			rowClassName = classNames({
+		const isCurrentRow = this.props.state.currentRow === this.props.rowId;
+		const rowClassName = classNames({
 				'row': true,
 				'clearfix': true,
 				'current': isCurrentRow
-			}),
-			hintsRowName = 'hintsRow-' + this.props.rowId,
-			rowName ='decodeRow-' + this.props.rowId;
+			});
+		const hintsRowName = 'hintsRow-' + this.props.rowId;
+		const rowName ='decodeRow-' + this.props.rowId;
 
 		return (
 			<div className={rowClassName}>
@@ -120,14 +127,14 @@ const HintsRow = React.createClass({
 	render: function() {
 		const hints = [];
 
-		let idVal,
-			hintClass = '',
-			exactMatches = this.props.state.exactMatches,
-			valueMatches = this.props.state.valueMatches;
+		let idVal;
+		let hintClass = '';
+		let exactMatches = this.props.state.exactMatches;
+		let valueMatches = this.props.state.valueMatches;
 
-		for (let i = 1; i <= this.props.state.pegsInRow; i++) {
+		let generateHint = (i) => {
 			hintClass = 'hint';
-			idVal = this.props.name + '-' + i;
+			idVal = this.props.name + '-' + i + 1;
 
 			//update current row
 			if (this.props.state.currentRow - 1 === this.props.rowId) {
@@ -141,7 +148,9 @@ const HintsRow = React.createClass({
 			}
 
 			hints.push(<Hint key={idVal} hintClass={hintClass} rowId={this.props.rowId} state={this.props.state}/>);
-		}
+		};
+
+		times(this.props.state.pegsInRow)(generateHint);
 
 		return (
 			<div className="hints-row">
@@ -153,14 +162,20 @@ const HintsRow = React.createClass({
 
 const DecodingBoard = React.createClass({
 	render: function() {
-		let rows = [],
-			i,
-			rowName;
+		let rows = [];
+		let i;
+		let rowName;
 
-		for (i=1; i <= this.props.state.attempts; i++) {
+		let generateRow = (i) => {
+			rowName = 'decodeRow-' + i + 1;
+			rows.push(<Row name={rowName} key={i + 1} rowId={i} state={this.props.state} activatePeg={this.props.activatePeg} submitPegs={this.props.submitPegs}/>);
+		};
+		/*for (i=1; i <= this.props.state.attempts; i++) {
 			rowName = 'decodeRow-' + i;
 			rows.push(<Row name={rowName} key={i} rowId={i-1} state={this.props.state} activatePeg={this.props.activatePeg} submitPegs={this.props.submitPegs}/>);
-		}
+		}*/
+
+		times(this.props.state.attempts)(generateRow);
 
 		return (
 			<div className="decoding-board left">
@@ -174,8 +189,8 @@ const CodePegs = React.createClass({
 	render: function() {
 		const pegs = [];
 
-		let idVal,
-			pegClass;
+		let idVal;
+		let pegClass;
 
 		for (let [key, value] of this.props.colors) {
 			idVal = 'peg-' + key;
@@ -199,13 +214,13 @@ const EndGame = React.createClass({
 		const endGameInfoClass = classNames({
 				'endgame': true,
 				'hidden': !this.props.state.endGame
-			}),
-			endGameStatusClass = classNames({
+			});
+		const endGameStatusClass = classNames({
 				'endgame-relative': true,
 				'success': this.props.state.success,
 				'failure': !this.props.state.success
-			}),
-			infoText = this.props.state.success ? 'Congratulations!' : 'GAME OVER!';
+			});
+		const infoText = this.props.state.success ? 'Congratulations!' : 'GAME OVER!';
 
 		return (
 			<div className={endGameInfoClass}>
@@ -222,7 +237,7 @@ const EndGame = React.createClass({
 const Mastermind = React.createClass({
 	getInitialState: function() {
 		return {
-			code: this.generateCode(), //the main code to be decoded
+			code: this.getCode(), //the main code to be decoded
 			selectedPeg: this.props.colors.get(0),
 			currentRow: 0,
 			currentGuess: new Map(),
@@ -239,7 +254,7 @@ const Mastermind = React.createClass({
 	reloadGame: function() {
 		this.setState({ success: false });
 		this.setState({ endGame: false });
-		this.setState({ code: this.generateCode() });
+		this.setState({ code: this.getCode() });
 		this.setState({ selectedPeg: this.props.colors.get(0) });
 		this.setState({ currentRow: 0 });
 		this.setState({ currentGuess: new Map() });
@@ -255,12 +270,14 @@ const Mastermind = React.createClass({
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	},
 
-	generateCode: function() {
+	getCode: function() {
 		const code = new Map();
 
-		for (let i = 0; i < this.props.codeLength; i++) {
+		let generateCode = (i) => {
 			code.set(i, this.props.colors.get(this.getRandomArbitrary(0, 5)));
-		}
+		};
+
+		times(this.props.codeLength)(generateCode);
 
 		return code;
 	},
@@ -288,11 +305,11 @@ const Mastermind = React.createClass({
 	},
 
 	submitPegs: function() {
-		let code = new Map(this.state.code),
-			pegs = this.state.currentGuess,
-			foundKey,
-			exactMatches = 0,
-			valueMatches = 0;
+		let code = new Map(this.state.code);
+		let pegs = this.state.currentGuess;
+		let foundKey;
+		let exactMatches = 0;
+		let valueMatches = 0;
 
 		// First pass: Look for value & position matches
 		// Safely remove items if they match

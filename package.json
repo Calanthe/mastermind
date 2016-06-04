@@ -1,7 +1,9 @@
 {
-  "name": "tutorial",
+  "name": "Mastermind in react",
   "version": "1.0.0",
   "description": "",
+  "author": "Zofia Korcz",
+  "license": "MIT",
   "main": "dist/demo.js",
   "scripts": {
     "watch": "webpack  --progress --colors --watch --config ./build.config.js",
@@ -11,6 +13,7 @@
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
+    "classnames": "^2.2.5",
     "path": "^0.12.7",
     "webpack": "^1.13.1"
   },

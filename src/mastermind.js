@@ -49,15 +49,15 @@ const DecodeRow = React.createClass({
 		let pegClass;
 
 		let generatePeg = (i) => {
-			idVal = this.props.name + '-' + i;
+			idVal = this.props.name + '-' + i + 1;
 			//update current row
 			if (this.props.state.currentRow === this.props.rowId) {
-				pegClass = this.props.state.currentGuess.get(i - 1) ? 'peg ' + this.props.state.currentGuess.get(i - 1) : 'peg';
+				pegClass = this.props.state.currentGuess.get(i) ? 'peg ' + this.props.state.currentGuess.get(i) : 'peg';
 			} else { //clear all of the next pegs - from the previous game
 				pegClass = 'peg';
 			}
 
-			pegs.push(<Peg idVal={idVal} name={this.props.name} value={i} key={idVal} pegClass={pegClass} isCurrentRow={this.props.isCurrentRow} activatePeg={this.props.activatePeg}/>);
+			pegs.push(<Peg idVal={idVal} name={this.props.name} value={i + 1} key={idVal} pegClass={pegClass} isCurrentRow={this.props.isCurrentRow} activatePeg={this.props.activatePeg}/>);
 		}
 
 		times(this.props.state.pegsInRow)(generatePeg);
@@ -163,17 +163,12 @@ const HintsRow = React.createClass({
 const DecodingBoard = React.createClass({
 	render: function() {
 		let rows = [];
-		let i;
 		let rowName;
 
 		let generateRow = (i) => {
 			rowName = 'decodeRow-' + i + 1;
 			rows.push(<Row name={rowName} key={i + 1} rowId={i} state={this.props.state} activatePeg={this.props.activatePeg} submitPegs={this.props.submitPegs}/>);
 		};
-		/*for (i=1; i <= this.props.state.attempts; i++) {
-			rowName = 'decodeRow-' + i;
-			rows.push(<Row name={rowName} key={i} rowId={i-1} state={this.props.state} activatePeg={this.props.activatePeg} submitPegs={this.props.submitPegs}/>);
-		}*/
 
 		times(this.props.state.attempts)(generateRow);
 
@@ -314,6 +309,7 @@ const Mastermind = React.createClass({
 		// First pass: Look for value & position matches
 		// Safely remove items if they match
 		for (let [key, value] of pegs) {
+			console.log(key, value);
 			if (value === code.get(key)) {
 				exactMatches++;
 				pegs.delete(key);
@@ -358,6 +354,8 @@ const Mastermind = React.createClass({
 
 				<EndGame state={this.state} reloadGame={this.reloadGame}/>
 				<div className="cheat">{this.state.code}</div>
+				<div className="cheat">exactMatches {this.state.exactMatches}</div>
+				<div className="cheat">valueMatches {this.state.valueMatches}</div>
 			</div>
 		);
 	}

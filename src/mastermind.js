@@ -144,6 +144,8 @@ const HintsRow = React.createClass({
 				} else if (valueMatches > 0) {
 					hintClass = hintClass + ' value-matches';
 					valueMatches--;
+				} else {
+					hintClass = hintClass + ' none-matches';
 				}
 			}
 

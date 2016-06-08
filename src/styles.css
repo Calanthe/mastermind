@@ -169,6 +169,7 @@ input[type="radio"] {
 
 .hint {
 	display: inline-block;
+	position: relative;
 	width: 10px;
 	height: 10px;
 	margin-right: 10px;
@@ -181,7 +182,24 @@ input[type="radio"] {
 }
 
 .hint.value-matches {
-	background-color: #D4D9E3;
+	background-color: #FFFFFF;
+}
+
+.hint.none-matches:before,  .hint.none-matches:after {
+	position: absolute;
+	left: 4px;
+	top: 1px;
+	content: ' ';
+	height: 8px;
+	width: 2px;
+	background-color: #333;
+}
+
+.hint.none-matches:before {
+	transform: rotate(45deg);
+}
+.hint.none-matches:after {
+	transform: rotate(-45deg);
 }
 
 .codepegs {

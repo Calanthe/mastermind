@@ -21,8 +21,7 @@ body {
 
 h1 {
 	color: #333333;
-	font-size: 6rem;
-	margin-top: 30px;
+	font-size: 1.8rem;
 	font-family: 'Cinzel', serif;
 	letter-spacing: 3px;
 }
@@ -47,8 +46,8 @@ a:hover {
 }
 
 #mastermind {
-	width: 800px;
-	margin: 0 auto;
+	width: 334px;
+	margin: 20px 10px 0 10px;
 }
 
 .rules {
@@ -57,7 +56,7 @@ a:hover {
 
 .rules-toggle {
 	cursor: pointer;
-	font-size: 40px;
+	font-size: 1.2rem;
 }
 
 .info {
@@ -67,7 +66,7 @@ a:hover {
 
 .row {
 	padding: 10px 0 10px 10px;
-	width: 650px;
+	width: 260px;
 	border: #F4F4F4 1px solid;
 }
 
@@ -89,8 +88,8 @@ input[type="radio"] {
 
 .peg input[type="radio"] + label {
 	display: inline-block;
-	width: 120px;
-	height: 120px;
+	width: 40px;
+	height: 40px;
 	margin: -1px 4px 0 0;
 	vertical-align: middle;
 	cursor: pointer;
@@ -134,8 +133,8 @@ input[type="radio"] {
 }
 
 .submit {
-	width: 50px;
-	height: 88px;
+	width: 20px;
+	height: 5px;
 	position: relative;
 	margin: 15px 7px;
 	border: none;
@@ -144,17 +143,17 @@ input[type="radio"] {
 }
 
 .submit:before {
-	left: 16px;
-	width: 20px;
-	height: 40px;
-	border-width: 0 10px 10px 0;
+	left: 6px;
+	width: 5px;
+	height: 12px;
+	border-width: 0 5px 5px 0;
+	top: 50%;
 	border-style: solid;
 	border-color: #B4BB69;
 	margin-top: -11px;
 	transform: rotate(45deg);
 	content: "";
 	position: absolute;
-	top: 28%;
 }
 
 .submit:after {
@@ -164,14 +163,14 @@ input[type="radio"] {
 }
 
 .hints-row {
-	width: 64px;
-	margin-top: 32px;
+	width: 44px;
+	margin-top: 0;
 }
 
 .hint {
 	display: inline-block;
-	width: 20px;
-	height: 20px;
+	width: 10px;
+	height: 10px;
 	margin-right: 10px;
 	border: 1px solid #28222D;
 	border-radius: 50%;
@@ -186,7 +185,7 @@ input[type="radio"] {
 }
 
 .codepegs {
-	width: 122px;
+	width: 50px;
 	margin-top: 10px;
 }
 
@@ -300,46 +299,11 @@ input[type="radio"] {
 	}
 
 	.rules-toggle {
-		font-size: 20px;
+		font-size: 1.2rem;
 	}
 
 	#mastermind {
 		width: 405px;
-	}
-
-	.row {
-		width: 260px;
-	}
-
-	.peg input[type="radio"] + label {
-		width: 40px;
-		height: 40px;
-	}
-
-	.submit {
-		width: 20px;
-		height: 5px;
-	}
-
-	.submit:before {
-		left: 6px;
-		width: 5px;
-		height: 12px;
-		border-width: 0 5px 5px 0;
-		top: 50%;
-	}
-
-	.hints-row {
-		width: 44px;
-		margin-top: 0;
-	}
-
-	.hint {
-		width: 10px;
-		height: 10px;
-	}
-
-	.codepegs {
-		width: 50px;
+		margin: 30px auto 0;
 	}
 }

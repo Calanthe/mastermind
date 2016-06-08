@@ -354,8 +354,6 @@ const Mastermind = React.createClass({
 
 				<EndGame state={this.state} reloadGame={this.reloadGame}/>
 				<div className="cheat">{this.state.code}</div>
-				<div className="cheat">exactMatches {this.state.exactMatches}</div>
-				<div className="cheat">valueMatches {this.state.valueMatches}</div>
 			</div>
 		);
 	}

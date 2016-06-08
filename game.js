@@ -1,4 +1,3 @@
-// demo.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Mastermind from './src/mastermind';

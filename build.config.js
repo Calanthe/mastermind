@@ -8,7 +8,8 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve('./dist'), //save result in 'dist' folder
-		filename: './game.js'
+		filename: './game.js',
+		publicPath: '/mastermind_webpack/'
 	},
 	module: {
 		loaders: [

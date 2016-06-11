@@ -7,13 +7,15 @@
   "main": "dist/game.js",
   "scripts": {
     "watch": "webpack  --progress --colors --watch --config ./build.config.js",
-    "build": "webpack --config ./build.config.js"
+    "build": "webpack --config ./build.config.js",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "classnames": "^2.2.5",
+    "gh-pages": "^0.11.0",
     "path": "^0.12.7",
     "webpack": "^1.13.1"
   },

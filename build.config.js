@@ -4,11 +4,11 @@ var webpack = require('webpack');
 module.exports = {
 	context: __dirname, //current folder as the reference to the other paths
 	entry: {
-		demo: './game.js' //entry point for building scripts
+		game: './game.js' //entry point for building scripts
 	},
 	output: {
 		path: path.resolve('./dist'), //save result in 'dist' folder
-		filename: 'game.js'
+		filename: './game.js'
 	},
 	module: {
 		loaders: [

@@ -1,10 +1,10 @@
 {
-  "name": "Mastermind in react",
+  "name": "Mastermind",
   "version": "1.0.0",
   "description": "",
   "author": "Zofia Korcz",
   "license": "MIT",
-  "main": "dist/demo.js",
+  "main": "dist/game.js",
   "scripts": {
     "watch": "webpack  --progress --colors --watch --config ./build.config.js",
     "build": "webpack --config ./build.config.js"

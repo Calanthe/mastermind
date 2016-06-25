@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "dist/game.js",
   "scripts": {
-    "watch": "webpack  --progress --colors --watch --config ./build.config.js",
-    "build": "webpack --config ./build.config.js",
+    "watch": "webpack --progress --colors --watch --config ./webpack.config.js",
+    "build": "webpack --config ./webpack.config.js",
     "deploy": "gh-pages -d dist"
   },
   "devDependencies": {

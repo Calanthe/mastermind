@@ -11,9 +11,9 @@ const Rules = React.createClass({
 	render: function() {
 		const className = classNames({
 				'info': true,
-				'hidden': !this.props.state.rules
+				'hidden': !this.props.rules
 			});
-		const infoText = !this.props.state.rules ? 'Show rules' : 'Hide rules';
+		const infoText = !this.props.rules ? 'Show rules' : 'Hide rules';
 
 		return (
 			<div className="rules">
@@ -192,10 +192,10 @@ const CodePegs = React.createClass({
 		for (let [key, value] of this.props.colors) {
 			idVal = 'peg-' + key;
 			pegClass = 'peg ' + value;
-			if (value === this.props.state.selectedPeg) {
+			if (value === this.props.selectedPeg) {
 				pegClass = pegClass + ' selected';
 			}
-			pegs.push(<Peg idVal={idVal} name='peg' value={value} key={idVal} pegClass={pegClass} activatePeg={this.props.activatePeg} isCurrentRow={true}/>);
+			pegs.push(<Peg idVal={idVal} name='peg' value={value} key={idVal} pegClass={pegClass} isCurrentRow={true} activatePeg={this.props.activatePeg}/>);
 		}
 
 		return (
@@ -210,14 +210,14 @@ const EndGame = React.createClass({
 	render: function() {
 		const endGameInfoClass = classNames({
 				'endgame': true,
-				'hidden': !this.props.state.endGame
+				'hidden': !this.props.endGame
 			});
 		const endGameStatusClass = classNames({
 				'endgame-relative': true,
-				'success': this.props.state.success,
-				'failure': !this.props.state.success
+				'success': this.props.success,
+				'failure': !this.props.success
 			});
-		const infoText = this.props.state.success ? 'Congratulations!' : 'GAME OVER!';
+		const infoText = this.props.success ? 'Congratulations!' : 'GAME OVER!';
 
 		return (
 			<div className={endGameInfoClass}>
@@ -311,7 +311,6 @@ const Mastermind = React.createClass({
 		// First pass: Look for value & position matches
 		// Safely remove items if they match
 		for (let [key, value] of pegs) {
-			console.log(key, value);
 			if (value === code.get(key)) {
 				exactMatches++;
 				pegs.delete(key);
@@ -347,14 +346,14 @@ const Mastermind = React.createClass({
 		return (
 			<div>
 				<h1><span className="M">M</span><span className="A">A</span><span className="S">S</span><span className="T">T</span><span className="E">E</span><span className="R">R</span><span className="MIND">MIND</span></h1>
-				<Rules state={this.state} toggleRules={this.toggleRules}/>
+				<Rules rules={this.state.rules} toggleRules={this.toggleRules}/>
 
 				<div className="clearfix">
 					<DecodingBoard state={this.state} activatePeg={this.activatePeg} submitPegs={this.submitPegs}/>
-					<CodePegs state={this.state} colors={this.props.colors} activatePeg={this.activatePeg}/>
+					<CodePegs selectedPeg={this.state.selectedPeg} colors={this.props.colors} activatePeg={this.activatePeg}/>
 				</div>
 
-				<EndGame state={this.state} reloadGame={this.reloadGame}/>
+				<EndGame endGame={this.state.endGame} success={this.state.success} reloadGame={this.reloadGame}/>
 				<div className="cheat">{this.state.code}</div>
 			</div>
 		);

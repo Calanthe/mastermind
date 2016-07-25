@@ -263,7 +263,7 @@ const Mastermind = React.createClass({
 		this.setState({ rules: !this.state.rules });
 	},
 
-	getRandomArbitrary: function(min, max) {
+	getRandomArbitrary: function(min = 0, max = 5) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	},
 
@@ -271,7 +271,7 @@ const Mastermind = React.createClass({
 		const code = new Map();
 
 		let generateCode = (i) => {
-			code.set(i, this.props.colors.get(this.getRandomArbitrary(0, 5)));
+			code.set(i, this.props.colors.get(this.getRandomArbitrary()));
 		};
 
 		times(this.props.codeLength)(generateCode);
@@ -279,12 +279,12 @@ const Mastermind = React.createClass({
 		return code;
 	},
 
-	activatePeg: function(event) { //The stateful component encapsulates all of the interaction logic
+	activatePeg: function(event) {
 		//if one of the peg on the right was selected
 		if (event.target.name.startsWith('peg')) {
 			this.setState({ selectedPeg: event.target.value });
 		} else {
-			//else if one of the pegs on decoding board was selected
+			//else if one of the pegs on the decoding board was selected
 			if (this.state.selectedPeg) { //if peg on the right was selected
 				this.setState({ currentGuess: this.state.currentGuess.set(event.target.value - 1, this.state.selectedPeg) });
 			}

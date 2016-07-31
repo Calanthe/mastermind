@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/mastermind_webpack/";
+/******/ 	__webpack_require__.p = "/mastermind/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -20391,9 +20391,9 @@
 		render: function render() {
 			var className = (0, _classnames2.default)({
 				'info': true,
-				'hidden': !this.props.state.rules
+				'hidden': !this.props.rules
 			});
-			var infoText = !this.props.state.rules ? 'Show rules' : 'Hide rules';
+			var infoText = !this.props.rules ? 'Show rules' : 'Hide rules';
 
 			return _react2.default.createElement(
 				'div',
@@ -20618,10 +20618,10 @@
 
 					idVal = 'peg-' + key;
 					pegClass = 'peg ' + value;
-					if (value === this.props.state.selectedPeg) {
+					if (value === this.props.selectedPeg) {
 						pegClass = pegClass + ' selected';
 					}
-					pegs.push(_react2.default.createElement(Peg, { idVal: idVal, name: 'peg', value: value, key: idVal, pegClass: pegClass, activatePeg: this.props.activatePeg, isCurrentRow: true }));
+					pegs.push(_react2.default.createElement(Peg, { idVal: idVal, name: 'peg', value: value, key: idVal, pegClass: pegClass, isCurrentRow: true, activatePeg: this.props.activatePeg }));
 				}
 			} catch (err) {
 				_didIteratorError = true;
@@ -20652,14 +20652,14 @@
 		render: function render() {
 			var endGameInfoClass = (0, _classnames2.default)({
 				'endgame': true,
-				'hidden': !this.props.state.endGame
+				'hidden': !this.props.endGame
 			});
 			var endGameStatusClass = (0, _classnames2.default)({
 				'endgame-relative': true,
-				'success': this.props.state.success,
-				'failure': !this.props.state.success
+				'success': this.props.success,
+				'failure': !this.props.success
 			});
-			var infoText = this.props.state.success ? 'Congratulations!' : 'GAME OVER!';
+			var infoText = this.props.success ? 'Congratulations!' : 'GAME OVER!';
 
 			return _react2.default.createElement(
 				'div',
@@ -20717,7 +20717,10 @@
 			this.setState({ rules: !this.state.rules });
 		},
 
-		getRandomArbitrary: function getRandomArbitrary(min, max) {
+		getRandomArbitrary: function getRandomArbitrary() {
+			var min = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var max = arguments.length <= 1 || arguments[1] === undefined ? 5 : arguments[1];
+
 			return Math.floor(Math.random() * (max - min + 1)) + min;
 		},
 
@@ -20727,7 +20730,7 @@
 			var code = new Map();
 
 			var generateCode = function generateCode(i) {
-				code.set(i, _this4.props.colors.get(_this4.getRandomArbitrary(0, 5)));
+				code.set(i, _this4.props.colors.get(_this4.getRandomArbitrary()));
 			};
 
 			times(this.props.codeLength)(generateCode);
@@ -20736,12 +20739,11 @@
 		},
 
 		activatePeg: function activatePeg(event) {
-			//The stateful component encapsulates all of the interaction logic
 			//if one of the peg on the right was selected
 			if (event.target.name.startsWith('peg')) {
 				this.setState({ selectedPeg: event.target.value });
 			} else {
-				//else if one of the pegs on decoding board was selected
+				//else if one of the pegs on the decoding board was selected
 				if (this.state.selectedPeg) {
 					//if peg on the right was selected
 					this.setState({ currentGuess: this.state.currentGuess.set(event.target.value - 1, this.state.selectedPeg) });
@@ -20803,7 +20805,6 @@
 					var key = _step3$value[0];
 					var value = _step3$value[1];
 
-					console.log(key, value);
 					if (value === code.get(key)) {
 						exactMatches++;
 						pegs.delete(key);
@@ -20917,14 +20918,14 @@
 						'MIND'
 					)
 				),
-				_react2.default.createElement(Rules, { state: this.state, toggleRules: this.toggleRules }),
+				_react2.default.createElement(Rules, { rules: this.state.rules, toggleRules: this.toggleRules }),
 				_react2.default.createElement(
 					'div',
 					{ className: 'clearfix' },
 					_react2.default.createElement(DecodingBoard, { state: this.state, activatePeg: this.activatePeg, submitPegs: this.submitPegs }),
-					_react2.default.createElement(CodePegs, { state: this.state, colors: this.props.colors, activatePeg: this.activatePeg })
+					_react2.default.createElement(CodePegs, { selectedPeg: this.state.selectedPeg, colors: this.props.colors, activatePeg: this.activatePeg })
 				),
-				_react2.default.createElement(EndGame, { state: this.state, reloadGame: this.reloadGame }),
+				_react2.default.createElement(EndGame, { endGame: this.state.endGame, success: this.state.success, reloadGame: this.reloadGame }),
 				_react2.default.createElement(
 					'div',
 					{ className: 'cheat' },

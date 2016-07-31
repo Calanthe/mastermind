@@ -45,7 +45,8 @@ a:hover {
 	color: #07594D;
 }
 
-#mastermind {
+#mastermind,
+footer {
 	width: 334px;
 	margin: 20px 10px 0 10px;
 }

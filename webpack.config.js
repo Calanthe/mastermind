@@ -9,7 +9,7 @@ module.exports = {
 	output: {
 		path: path.resolve('./dist'), //where the compiled JavaScript file should be saved
 		filename: './game.js', //name of the compiled JavaScript file
-		publicPath: '/mastermind_webpack/'
+		publicPath: '/mastermind/'
 	},
 	module: {
 		loaders: [
